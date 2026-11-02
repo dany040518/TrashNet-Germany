@@ -1,5 +1,5 @@
 # TrashNet-Germany
-## Datasets del Proyecto
+## Datasets
 - TACO Dataset
 - TrashNet Dataset
 - Waste Classification Dataset (Kaggle)
