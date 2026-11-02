@@ -1,6 +1,6 @@
 # TrashNet-Germany
 ## Datasets
-1. TACO Dataset:  https://github.com/pedropro/TACO o https://datasetninja.com/taco
+1. TACO Dataset:  https://github.com/pedropro/TACO or https://datasetninja.com/taco
 - Content: Images captured in real-world environments (streets, indoor spaces, and natural settings), featuring instance-level segmentation annotations of waste.
 - Project Application: Essential for waste detection, classification, segmentation, and image retrieval tasks. Since it contains real-world images with complex and noisy backgrounds, it allows us to evaluate the model's robustness under realistic conditions.
 2. TrashNet Dataset: https://github.com/garythung/trashnetContenido
