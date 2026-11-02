@@ -14,3 +14,10 @@ Our automated classification system targets the primary German recycling streams
 
 ## Expected Impact
 Provide an accessible computer vision tool that helps international residents classify waste items accurately using standard smartphone photography in uncontrolled environments.
+
+## Success Criteria & Evaluation Metrics
+To evaluate model performance objectively within a data mining context, the project sets the following criteria:
+
+- *Primary Metric:* Macro F1-Score to account for class imbalances across waste categories.
+- *Error Analysis:* Detailed confusion matrix analysis to identify which material categories (e.g., plastics vs. dirty paper) are most frequently misclassified.
+- *Robustness Target:* Maintain consistent classification reliability when evaluating images with background noise and varied lighting conditions.
