@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+site-packages/
+pip-wheel-metadata/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Linux and editor files
+*~
+.directory
+.DS_Store
+.vscode/
+.idea/
+
+# Logs and local environment
+*.log
+.env
+.env.*
+!.env.example
+
+# Datasets and large image files
+data/raw/
+data/processed/
+!data/README.md
+!data/.gitkeep
+*.jpg
+*.JPG
+*.jpeg
+*.JPEG
+*.png
+*.PNG
+*.zip
+*.tar.gz
+
+# Model artifacts
+*.pt
+*.pth
+*.pkl
+*.h5
+
+# ML framework caches
+.cache/
+wandb/
+mlruns/
