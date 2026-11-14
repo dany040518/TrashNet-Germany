@@ -10,3 +10,11 @@
 3. Waste Classification Dataset (Kaggle): https://www.kaggle.com/datasets/techsash/waste-classification-dataContenido
 - Content: More than 25,000 photographic images divided into two main categories: organic waste and recyclable materials.
 - Project Application: Provides the large volume of data needed to reduce the risk of project failure due to insufficient or unsuitable data (not having enough data or not having the right data).
+
+## Branching Strategy
+
+- `main`: stable, reviewed project baseline.
+- `dev`: integration branch for completed and reviewed work.
+- `feature/EDM-xx-<descripcion>`: short-lived branches created from `dev` for Jira-tracked tasks. Merge completed work back into `dev`; promote stable releases from `dev` to `main`.
+
+Use Jira Smart Commit messages in the format `EDM-xx: <mensaje>` so commits are associated with the corresponding Jira issue. Include the issue key in branch names and commit messages.
