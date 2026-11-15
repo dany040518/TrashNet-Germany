@@ -47,7 +47,7 @@ flowchart BT
     subgraph L3["LEVEL 3 — Communication & Protocol"]
         direction LR
         PUB["Signal Publisher<br/>iot/publisher.py"]
-        PAYLOAD["JSON Payload<br/>{ bin_id, timestamp,<br/>predicted_stream, confidence,<br/>led_color, status }"]
+        PAYLOAD["JSON Payload v1.0<br/>{ schema_version, bin_id, timestamp,<br/>class, confidence, status,<br/>led_color, led_pattern, ui_payload }"]
         TRANSPORT["Message Transport<br/>MQTT · Local Mosquitto Broker<br/>Approved: see ADR 001<br/>classification · led/command<br/>feedback · telemetry"]
         LED_ADAPTER["LED Actuation Adapter<br/>MQTT subscriber: classification<br/>publisher: led/command"]
     end
@@ -113,20 +113,31 @@ flowchart BT
 
 ### JSON result envelope
 
-The exact schema, field constraints, and versioning remain subject to Sprint 2 task 2.2.3. This example expresses the interface expected by the diagram:
+The versioned contract and field constraints are defined in [the signal message specification](signal_message_format.md) and its JSON Schema. This example uses the classification signal field names:
 
 ```json
 {
+  "schema_version": "1.0",
   "bin_id": "bin-01",
-  "timestamp": "2026-11-15T18:00:00Z",
-  "predicted_stream": "PAPIER",
+  "timestamp": "2026-11-15T21:24:28.319Z",
+  "class": "PAPIER",
   "confidence": 0.92,
+  "status": "RESULT",
   "led_color": "#0055A4",
-  "status": "RESULT"
+  "led_pattern": "SOLID",
+  "ui_payload": {
+    "label_de": "Papier",
+    "label_en": "Paper & cardboard",
+    "action_tip": {
+      "de": "Sauber und trocken.",
+      "en": "Keep clean and dry."
+    }
+  },
+  "latency_ms": 143
 }
 ```
 
-`predicted_stream` is one of the five stream identifiers or `UNSURE`; `confidence` is in the inclusive range 0–1. `status` distinguishes a normal result from an unsure/fallback result. Timestamp representation, delivery acknowledgement, and schema version are to be finalized in the protocol and schema decisions.
+`class` is one of the five stream identifiers or `UNSURE`; `confidence` is in the inclusive range 0–1. `status` distinguishes a normal result from an unsure/fallback result. The contract, bilingual UI fields, and class-to-LED constraints are specified in `docs/signal_message_format.md`.
 
 ## 3. Detailed Stage-by-Stage Interface Specification
 
@@ -162,7 +173,7 @@ Measure end-to-end duration with a monotonic clock and report stage durations se
 | Sprint 2 task | Decision / verification item | Required evidence or exit condition |
 | --- | --- | --- |
 | **2.2.2 — Protocol ADR (Accepted)** | MQTT with local Mosquitto is selected; validate QoS 1 fan-out to LED and kiosk, feedback delivery, duplicate handling, and local broker recovery | See [ADR 001](adr_001_communication_protocol.md); benchmark publish-to-handler delivery against the `< 20 ms` allocation |
-| **2.2.3 — Exact JSON Schema** | Finalize field names/types, timestamp format, stream/status enums, `bin_id` semantics, schema versioning, and invalid-message behavior | Versioned schema with producer/consumer examples and validation tests |
+| **2.2.3 — Signal Message Format (Defined)** | The v1.0 classification payload and Draft-07 schema are defined; validate producer/consumer behavior and feedback correlation | See [signal message format](signal_message_format.md) and `iot/schemas/classification_signal.schema.json`; run schema and application validation tests |
 | **2.2.4 — Confidence Threshold Calibration** | Validate the proposed `τ = 0.70` against validation data and the cost of a wrong-bin recommendation versus an UNSURE result | Calibration report with per-class behavior and a justified operating threshold |
 | **2.2.5 — Hardware Simulator Selection** | Select the LED controller and development simulator; verify five stream channels plus blinking amber, command acknowledgement, and safe failure behavior | Recorded hardware/simulator choice and a repeatable actuation test |
 | **2.3.4 — UI Feasibility Review** | Confirm kiosk display platform, DE/EN copy, accessibility/readability, and feasibility of Idle, Scanning, Bin Result + Tip, and Unsure Guidance states | Reviewed UI flow/prototype and confirmed integration interface |
