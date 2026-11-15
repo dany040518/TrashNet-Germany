@@ -1,7 +1,5 @@
 ## Success Criteria
 
-Proposed targets, to be agreed with the team and the course supervisor in Sprint 1.
-
 ### Business success
 - A user can photograph one item and get the correct German bin or stream in under 3 seconds (target, to be validated).
 - The tool shows the answer in plain English with the German term (e.g. "Gelbe Tonne / Yellow bin").
