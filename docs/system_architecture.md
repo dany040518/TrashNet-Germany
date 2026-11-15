@@ -29,6 +29,8 @@ The Altglas green is the demonstrator's stream indicator; it does not replace lo
 
 The diagram is bottom-up (`flowchart BT`): physical inputs and outputs are at Level 1, and the user interaction layer is at Level 5. Solid arrows indicate data/result flow, thick arrows indicate actuation commands, and dotted arrows indicate monitoring/telemetry.
 
+![Five-layer system architecture](images/system_architecture_5layers.png)
+
 ```mermaid
 flowchart BT
     subgraph L1["LEVEL 1 — Physical Sensor & Actuator"]

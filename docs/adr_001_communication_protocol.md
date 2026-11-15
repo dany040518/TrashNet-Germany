@@ -42,6 +42,8 @@ A local FastAPI or Flask service is easy to inspect and debug, and HTTP/JSON is 
 
 Scores use a 1–5 scale, where 5 best satisfies the driver. Weighted points are `weight × score`; the total is divided by 100 to yield a score out of 5.
 
+![Communication protocol comparison](images/adr_protocol_comparison.png)
+
 | Decision driver | Weight | MQTT / Mosquitto score | MQTT points | Serial / GPIO score | Serial points | REST score | REST points |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Offline operation | 30% | 5 | 150 | 5 | 150 | 5 | 150 |
