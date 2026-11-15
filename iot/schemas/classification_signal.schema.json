@@ -1,0 +1,328 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://trashnet-germany.local/schemas/classification_signal.schema.json",
+  "title": "Smart Bin Classification Signal",
+  "description": "Version 1.0 compact classification event published to the local MQTT classification topic.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "bin_id",
+    "timestamp",
+    "class",
+    "confidence",
+    "status",
+    "led_color",
+    "led_pattern",
+    "ui_payload"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "bin_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "class": {
+      "type": "string",
+      "enum": [
+        "GELBER_SACK",
+        "PAPIER",
+        "RESTMUELL",
+        "BIOABFALL",
+        "ALTGLAS",
+        "UNSURE"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "RESULT",
+        "UNSURE"
+      ]
+    },
+    "led_color": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    },
+    "led_pattern": {
+      "type": "string",
+      "enum": [
+        "SOLID",
+        "BLINK_SLOW"
+      ]
+    },
+    "ui_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label_de",
+        "label_en",
+        "action_tip"
+      ],
+      "properties": {
+        "label_de": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24
+        },
+        "label_en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "action_tip": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "de",
+            "en"
+          ],
+          "properties": {
+            "de": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 24
+            },
+            "en": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 24
+            }
+          }
+        }
+      }
+    },
+    "latency_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 60000
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "const": "GELBER_SACK"
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "RESULT"
+          },
+          "led_color": {
+            "const": "#FFD700"
+          },
+          "led_pattern": {
+            "const": "SOLID"
+          },
+          "ui_payload": {
+            "properties": {
+              "label_de": {
+                "const": "Gelber Sack"
+              },
+              "label_en": {
+                "const": "Yellow packaging"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "const": "PAPIER"
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "RESULT"
+          },
+          "led_color": {
+            "const": "#0055A4"
+          },
+          "led_pattern": {
+            "const": "SOLID"
+          },
+          "ui_payload": {
+            "properties": {
+              "label_de": {
+                "const": "Papier"
+              },
+              "label_en": {
+                "const": "Paper & cardboard"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "const": "RESTMUELL"
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "RESULT"
+          },
+          "led_color": {
+            "const": "#333333"
+          },
+          "led_pattern": {
+            "const": "SOLID"
+          },
+          "ui_payload": {
+            "properties": {
+              "label_de": {
+                "const": "Restmüll"
+              },
+              "label_en": {
+                "const": "Residual waste"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "const": "BIOABFALL"
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "RESULT"
+          },
+          "led_color": {
+            "const": "#8B4513"
+          },
+          "led_pattern": {
+            "const": "SOLID"
+          },
+          "ui_payload": {
+            "properties": {
+              "label_de": {
+                "const": "Bioabfall"
+              },
+              "label_en": {
+                "const": "Organic waste"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "const": "ALTGLAS"
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "RESULT"
+          },
+          "led_color": {
+            "const": "#2E8B57"
+          },
+          "led_pattern": {
+            "const": "SOLID"
+          },
+          "ui_payload": {
+            "properties": {
+              "label_de": {
+                "const": "Altglas"
+              },
+              "label_en": {
+                "const": "Glass recycling"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "const": "UNSURE"
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "UNSURE"
+          },
+          "led_color": {
+            "const": "#FFBF00"
+          },
+          "led_pattern": {
+            "const": "BLINK_SLOW"
+          },
+          "ui_payload": {
+            "properties": {
+              "label_de": {
+                "const": "Unsicher"
+              },
+              "label_en": {
+                "const": "Unsure"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
