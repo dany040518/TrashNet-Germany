@@ -15,6 +15,8 @@
 
 - `main`: stable, reviewed project baseline.
 - `dev`: integration branch for completed and reviewed work.
-- `feature/EDM-xx-<descripcion>`: short-lived branches created from `dev` for Jira-tracked tasks. Merge completed work back into `dev`; promote stable releases from `dev` to `main`.
+- `EDM-<id>-<short-slug>`: short-lived branches created from `dev` for Jira-tracked tasks (for example, `EDM-19-1-1-4-configure-jira-board-and-definition-of-done`). Merge completed work back into `dev`; promote stable releases from `dev` to `main`.
 
-Use Jira Smart Commit messages in the format `EDM-xx: <mensaje>` so commits are associated with the corresponding Jira issue. Include the issue key in branch names and commit messages.
+Use commit messages in the format `EDM-<id> <imperative description>` (for example, `EDM-19 1.1.4 Configure Jira board and Definition of Done`) so commits are associated with the corresponding Jira issue. Do not put a colon after the issue key.
+
+The Jira Scrum board workflow is `To Do` → `In Progress` → `Done`. A ticket can move to `Done` only after its development activity is visible in Jira and its Pull Request targeting `dev` has been reviewed and approved on GitHub. See the [Jira board governance and Definition of Done](docs/definition_of_done.md).
