@@ -29,7 +29,7 @@ STREAM_CONFIG: Dict[str, StreamConfig] = {
         label_en="Yellow packaging",
         default_tip={
             "de": "Aludeckel entfernen.",
-            "en": "Remove aluminum lids.",
+            "en": "Peel off aluminum lid.",
         },
     ),
     "PAPIER": StreamConfig(
